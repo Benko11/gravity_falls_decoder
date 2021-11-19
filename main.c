@@ -14,7 +14,7 @@ cyclic_array letters;
 int main(int argc, char const *argv[]) {
     c_arr_init(&letters, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
-    char *input = (char *) malloc(1024 * 1024 * 1024);
+    char *input = (char *) malloc(MAX_SIZE);
     if (input == NULL) {
         fprintf(stderr, "Memory has not been allocated.\n");
         exit(EXIT_FAILURE);
