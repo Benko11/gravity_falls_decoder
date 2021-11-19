@@ -25,7 +25,7 @@ int main(int argc, char const *argv[]) {
     str_remove_trailing_newline(input);
     
     string text;
-    str_init(&text, str_size(input));
+    str_init(&text);
     str_assign(&text, input);
 
     

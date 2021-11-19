@@ -2,23 +2,53 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include "string.h"
-#include "cyclic_array.h"
-#include "ciphers.h"
+#include "../string.h"
+#include "../cyclic_array.h"
+#include "../ciphers.h"
 
 void assign_to_string() {   
     string name;
-    str_init(&name, 1);
+    str_init(&name);
     str_assign(&name, "Benjamin");
     assert(strcmp(name.buffer, "Benjamin") == 0);
-    // assert(name.capacity == str_size(name.buffer));
+    assert(name.capacity == str_size(name.buffer));    
 
+    string text;
+    str_init(&text);
+    str_assign(&text, "B Bergstrom Hello Howdy Whatup Grunkle Stan");
+    assert(strcmp(text.buffer, "B Bergstrom Hello Howdy Whatup Grunkle Stan") == 0);
+
+    string gf;
+    str_init(&gf);
+    str_assign(&gf, "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD.");
+    assert(strcmp(gf.buffer, "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD.") == 0);
+
+    string long_text, filename;
+    str_init(&long_text);
+    str_init(&filename);
+    str_assign(&filename, "long_text.txt");
+    
+    FILE *fp = fopen(str_get(&filename), "r");
+    if (fp == NULL) {
+        fprintf(stderr, "File not found\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fseek(fp, 0, SEEK_END);
+    long filesize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    char *buffer = (char *) malloc(filesize);
+    fread(buffer, 1, filesize, fp);
+
+    str_assign(&long_text, buffer);
+    assert(strcmp(long_text.buffer, buffer) == 0);
     puts("✔️ Assignment to string");
 }
 
 void add_to_string() {
     string str;
-    str_init(&str, 1);
+    str_init(&str);
     str_assign(&str, "a");
 
     assert(str.buffer == "a");
@@ -27,34 +57,61 @@ void add_to_string() {
     assert(strcmp(str.buffer, "abc") == 0);
 
     string str2;
-    str_init(&str2, 1);
+    str_init(&str2);
     str_assign(&str2, "Benjamin ");
     str_add(&str2, "Bergstrom");
     assert(strcmp(str2.buffer, "Benjamin Bergstrom") == 0);
 
     string str3;
-    str_init(&str3, 1);
+    str_init(&str3);
     str_add(&str3, "Hello");
     assert(strcmp(str3.buffer, "Hello") == 0);
 
     string str4;
-    str_init(&str4, 1);
+    str_init(&str4);
     str_add(&str4, "a");
     str_add(&str4, "b");
     str_add(&str4, "c");
     assert(strcmp(str4.buffer, "abc") == 0);
+
+    string long_text, filename;
+    str_init(&long_text);
+    str_init(&filename);
+    str_assign(&filename, "long_text.txt");
+
+    FILE *fp = fopen(str_get(&filename), "r");
+    if (fp == NULL) {
+        fprintf(stderr, "File not found\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fseek(fp, 0, SEEK_END);
+    long filesize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    char *everything = (char *) malloc(filesize);
+    fread(everything, 1, filesize, fp);
+
+    fseek(fp, 0, SEEK_SET);
+    char *buffer = (char *) malloc(filesize);
+    while (fgets(buffer, filesize, fp)) {
+        str_add(&long_text, buffer);
+    }
+
+    assert(strcmp(long_text.buffer, everything) == 0);
 
     puts("✔️ Add to string");
 }
 
 void print_string() {
     string name;
-    str_init(&name, 8);
+    str_init(&name);
     str_assign(&name, "Benjamin Bergstrom");
-    char *my_name = str_print(&name);
+    char *my_name = str_get(&name);
     assert(my_name == "Benjamin Bergstrom");
 
     puts("✔️ Printing string with spaces");
+    
 }
 
 void cyclic_clock_indices() {
@@ -103,7 +160,7 @@ void aiz26_cipher() {
     c_arr_init(&letters, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
     string jibberish;
-    str_init(&jibberish, 1);
+    str_init(&jibberish);
     char *b = "B Bergstrom Hello Howdy Whatup Grunkle Stan";
     str_assign(&jibberish, b);
     char *a = at_bash_cipher(&jibberish, &letters);
@@ -152,13 +209,13 @@ void test_ceaser_cipher() {
     c_arr_init(&letters, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
     string name;
-    str_init(&name, 10);
+    str_init(&name);
     str_add(&name, "Benjamin Bergstrom");
 
     assert(strcmp(caesar_cipher(&name, &letters), "EHQMDPLQ EHUJVWURP") == 0);
 
     string text;
-    str_init(&text, 1500);
+    str_init(&text);
     str_add(&text, "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD.");
 
     assert(strcmp(caesar_cipher(&text, &letters), "JUDYLWB IDOOV LV DQ DPHULFDQ PBVWHUB-FRPHGB DQLPDWHG WHOHYLVLRQ VHULHV FUHDWHG EB DOHA KLUVFK IRU GLVQHB FKDQQHO DQG GLVQHB AG.") == 0);
@@ -168,13 +225,13 @@ void test_ceaser_cipher() {
 
 int main(int argc, char const *argv[]) {
     assign_to_string();
-    print_string();
     add_to_string();
-    cyclic_clock_indices();
-    cyclic_clock_chars();
-    cyclic_clock_moving();
+    // print_string();
+    // cyclic_clock_indices();
+    // cyclic_clock_chars();
+    // cyclic_clock_moving();
     // aiz26_cipher();
-    test_ceaser_cipher();
+    // test_ceaser_cipher();
 
     puts("All tests passed!");
 

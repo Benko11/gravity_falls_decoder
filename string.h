@@ -9,15 +9,15 @@ typedef struct string_t {
     size_t capacity;
 } string;
 
-void str_init(string*, size_t);
+void str_init(string*);
 void str_assign(string*, char*);
 void str_add(string*, char*);
 void str_add_c(string*, char);
-char *str_print(string*);
+char *str_get(string*);
 
-void str_init(string *str, size_t capacity) {
-    str->buffer = (char *) malloc(capacity * sizeof(char));
-    str->capacity = capacity;
+void str_init(string *str) {
+    str->buffer = (char *) malloc(1 * sizeof(char));
+    str->capacity = 1;
 }
 
 void str_assign(string *str, char *value) {
@@ -38,7 +38,7 @@ void str_add(string *str, char *extra) {
     }
 
     string backup;
-    str_init(&backup, 1);
+    str_init(&backup);
     str_assign(&backup, str->buffer);
 
     size_t size = str->capacity + str_size(extra);
@@ -65,7 +65,7 @@ void str_add(string *str, char *extra) {
 
 void str_add_c(string *str, char extra) {
     string backup;
-    str_init(&backup, 1);
+    str_init(&backup);
     str_assign(&backup, str->buffer);
 
     size_t size = str->capacity + 1;
@@ -88,7 +88,7 @@ void str_add_c(string *str, char extra) {
     *aux_ptr = '\0';
 }
 
-char *str_print(string *str) {
+char *str_get(string *str) {
     return str->buffer;
 }
 

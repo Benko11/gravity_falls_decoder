@@ -5,7 +5,7 @@
 
 char *at_bash_cipher(string *text, cyclic_array *letters) {
     string res;
-    str_init(&res, 1);
+    str_init(&res);
 
     char *aux_ptr = text->buffer;
     while (*aux_ptr != '\0') {
@@ -31,7 +31,7 @@ char *at_bash_cipher(string *text, cyclic_array *letters) {
 
 char *caesar_cipher(string *text, cyclic_array *letters) {
     string res;
-    str_init(&res, 1);
+    str_init(&res);
 
     while (*text->buffer != '\0') {
         if (*text->buffer >= 'a' && *text->buffer <= 'z' || *text->buffer >= 'A' && *text->buffer <= 'Z') {
