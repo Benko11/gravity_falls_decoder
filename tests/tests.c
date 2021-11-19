@@ -103,12 +103,34 @@ void add_to_string() {
     puts("✔️ Add to string");
 }
 
-void print_string() {
+void get_string() {
     string name;
     str_init(&name);
     str_assign(&name, "Benjamin Bergstrom");
     char *my_name = str_get(&name);
     assert(my_name == "Benjamin Bergstrom");
+
+    string long_text, filename;
+    str_init(&long_text);
+    str_init(&filename);
+    str_assign(&filename, "long_text.txt");
+    
+    FILE *fp = fopen(str_get(&filename), "r");
+    if (fp == NULL) {
+        fprintf(stderr, "File not found\n");
+        exit(EXIT_FAILURE);
+    }
+
+    fseek(fp, 0, SEEK_END);
+    long filesize = ftell(fp);
+    fseek(fp, 0, SEEK_SET);
+
+    char *buffer = (char *) malloc(filesize);
+    fread(buffer, 1, filesize, fp);
+    str_assign(&long_text, buffer);
+
+    char *aux = str_get(&long_text);
+    assert(strcmp(long_text.buffer, aux) == 0);
 
     puts("✔️ Printing string with spaces");
     
@@ -225,8 +247,8 @@ void test_ceaser_cipher() {
 
 int main(int argc, char const *argv[]) {
     assign_to_string();
-    add_to_string();
-    // print_string();
+    // add_to_string();
+    get_string();
     // cyclic_clock_indices();
     // cyclic_clock_chars();
     // cyclic_clock_moving();
