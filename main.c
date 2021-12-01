@@ -36,7 +36,8 @@ int main(int argc, char const *argv[]) {
             printf("%s\n", caesar_cipher(&text, &letters));
             puts("");
         } else if (selection == '2') {
-
+            printf("%s\n", caesar_decipher(&text, &letters));
+            puts("");
         } else if (selection == '3') {
             printf("%s\n", at_bash_cipher(&text, &letters));
         } else if (selection == '4') {

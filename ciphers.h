@@ -44,3 +44,19 @@ char *caesar_cipher(string *text, cyclic_array *letters) {
 
     return res.buffer;
 }
+
+char *caesar_decipher(string *text, cyclic_array *letters) {
+    string res;
+    str_init(&res);
+
+    while (*text->buffer != '\0') {
+        if (*text->buffer >= 'a' && *text->buffer <= 'z' || *text->buffer >= 'A' && *text->buffer <= 'Z') {
+            str_add_c(&res, c_arr_move(letters, toupper(*text->buffer), -3));
+        } else {
+            str_add_c(&res, *text->buffer);
+        }
+        text->buffer++;
+    }
+
+    return res.buffer;
+}
