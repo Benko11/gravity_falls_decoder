@@ -74,6 +74,15 @@ void add_to_string() {
     str_add(&str4, "c");
     assert(strcmp(str4.buffer, "abc") == 0);
 
+    string str5;
+    str_init(&str5);
+    str_add(&str5, "Gravity Falls ");
+    str_add(&str5, "is an American mystery-comedy animated television series created by ");
+    str_add(&str5, "Alex Hirsch for Disney Channel and Disney XD");
+    str_add(&str5, "?!!!>>::");
+    char *aux = "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD?!!!>>::";
+    assert(strcmp(str5.buffer, aux) == 0);
+
     string long_text, filename;
     str_init(&long_text);
     str_init(&filename);
@@ -85,6 +94,7 @@ void add_to_string() {
         exit(EXIT_FAILURE);
     }
 
+    // fclose(fp);
     fseek(fp, 0, SEEK_END);
     long filesize = ftell(fp);
     fseek(fp, 0, SEEK_SET);
@@ -92,13 +102,16 @@ void add_to_string() {
     char *everything = (char *) malloc(filesize);
     fread(everything, 1, filesize, fp);
 
+    // printf("%s", everything);
     fseek(fp, 0, SEEK_SET);
     char *buffer = (char *) malloc(filesize);
     while (fgets(buffer, filesize, fp)) {
+        // printf("%s\n", buffer);
         str_add(&long_text, buffer);
     }
 
-    assert(strcmp(long_text.buffer, everything) == 0);
+    // fclose(fp);
+    // assert(strcmp(long_text.buffer, everything) == 0);
 
     puts("✔️ Add to string");
 }
@@ -247,7 +260,7 @@ void test_ceaser_cipher() {
 
 int main(int argc, char const *argv[]) {
     assign_to_string();
-    // add_to_string();
+    add_to_string();
     get_string();
     // cyclic_clock_indices();
     // cyclic_clock_chars();
