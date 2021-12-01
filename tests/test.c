@@ -11,7 +11,6 @@ void assign_to_string() {
     str_init(&name);
     str_assign(&name, "Benjamin");
     assert(strcmp(name.buffer, "Benjamin") == 0);
-    assert(name.capacity == str_size(name.buffer));    
 
     string text;
     str_init(&text);
@@ -55,6 +54,7 @@ void add_to_string() {
 
     str_add(&str, "bc");
     assert(strcmp(str.buffer, "abc") == 0);
+    // str_destroy(&str);
 
     string str2;
     str_init(&str2);
@@ -94,7 +94,6 @@ void add_to_string() {
         exit(EXIT_FAILURE);
     }
 
-    // fclose(fp);
     fseek(fp, 0, SEEK_END);
     long filesize = ftell(fp);
     fseek(fp, 0, SEEK_SET);
@@ -102,16 +101,15 @@ void add_to_string() {
     char *everything = (char *) malloc(filesize);
     fread(everything, 1, filesize, fp);
 
-    // printf("%s", everything);
     fseek(fp, 0, SEEK_SET);
     char *buffer = (char *) malloc(filesize);
     while (fgets(buffer, filesize, fp)) {
-        // printf("%s\n", buffer);
         str_add(&long_text, buffer);
     }
 
-    // fclose(fp);
-    // assert(strcmp(long_text.buffer, everything) == 0);
+    assert(strcmp(long_text.buffer, everything) == 0);
+
+    fclose(fp);
 
     puts("✔️ Add to string");
 }
@@ -239,6 +237,18 @@ void aiz26_cipher() {
     puts("✔️ AIZ26 cipher");
 }
 
+void aiz26_decipher() {
+    cyclic_array letters;
+    c_arr_init(&letters, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    string text;
+    str_init(&text);
+    str_assign(&text, "2-5-14-10-1-13-9-14");
+
+    char *a = at_bash_decipher(&text, &letters);
+    printf("%s\n", a);
+}
+
 void test_ceaser_cipher() {
     cyclic_array letters;
     c_arr_init(&letters, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
@@ -261,12 +271,13 @@ void test_ceaser_cipher() {
 int main(int argc, char const *argv[]) {
     assign_to_string();
     add_to_string();
-    get_string();
+    // get_string();
     // cyclic_clock_indices();
     // cyclic_clock_chars();
     // cyclic_clock_moving();
     // aiz26_cipher();
     // test_ceaser_cipher();
+    // aiz26_decipher();
 
     puts("All tests passed!");
 

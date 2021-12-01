@@ -37,22 +37,19 @@ void str_add(string *str, char *extra) {
         return;
     }
 
-    string backup;
-    str_init(&backup);
-    str_assign(&backup, str->buffer);
-
     size_t size = str->capacity + str_size(extra);
     while (size > str->capacity) {
         str->capacity *= 2;
     }
 
+    char *backup = str->buffer;
     str->buffer = NULL;
-    str->buffer = (char *) malloc(str->capacity * sizeof(char));
-
+    str->buffer = realloc(str->buffer, str->capacity);
+    
     char *aux_ptr = str->buffer;
-    while (*backup.buffer != '\0') {
-        *aux_ptr = *backup.buffer;
-        backup.buffer++;
+    while (*backup != '\0') {
+        *aux_ptr = *backup;
+        backup++;
         aux_ptr++;
     }
 
@@ -92,7 +89,7 @@ char *str_get(string *str) {
     return str->buffer;
 }
 
-void str_destroy(string str) {
-    free(str.buffer);
+void str_destroy(string *str) {
+    free(str);
 }
 #endif

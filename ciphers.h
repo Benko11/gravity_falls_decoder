@@ -2,6 +2,7 @@
 #include <ctype.h>
 #include "string.h"
 #include "cyclic_array.h"
+#include <math.h>
 
 char *at_bash_cipher(string *text, cyclic_array *letters) {
     string res;
@@ -12,20 +13,54 @@ char *at_bash_cipher(string *text, cyclic_array *letters) {
         // change to number and add a dash
         if (*aux_ptr >= 'a' && *aux_ptr <= 'z' || *aux_ptr >= 'A' && *aux_ptr <= 'Z') {
             const size_t current_index = c_arr_index(letters, toupper(*aux_ptr));
-            printf("Current index: %lu\n", current_index);
             const int RESERVE = current_index > 9 ? 3 : 2;
-            printf("Reserve: %d\n", RESERVE);
             char temp[RESERVE];
             sprintf(temp, "%lu", current_index);
-            printf("Temp: %s\n", temp);
-            printf("Capacity: %s\n", text->buffer);
             str_add(&res, temp);
+            // str_add(&res, "-");
         } else {
             str_add_c(&res, *aux_ptr);
         }
+        
         *aux_ptr++;
     }
 
+    return res.buffer;
+}
+
+char *at_bash_decipher(string *text, cyclic_array *letters) {
+    string res;
+    str_init(&res);
+
+    int *numbers = (int *) malloc(50 * sizeof(char));
+    int current_number = 0;
+    char *aux_ptr = text->buffer;
+    char *item = (char *) malloc(3 * sizeof(char));
+
+    size_t current_index = 0;
+    while (*aux_ptr != '\0') {
+        if ('0' <= *aux_ptr && *aux_ptr <= '9') {
+            item[current_index++] = *aux_ptr;
+        } else {
+            item[current_index++] = '\0';
+            char *aux_index_ptr = &item[current_index - 1];
+            int power = 0;
+            numbers[current_number] = 0;
+
+            while (*aux_index_ptr != '\0') {
+                numbers[current_number] += (*aux_index_ptr - 48) * pow(10, power);
+                printf("c: %d\n", *aux_index_ptr);
+                power++;
+                aux_index_ptr--;
+            }
+            current_index = 0;
+        }
+        aux_ptr++;
+    }
+
+    for (int i = 0; i <= 9; i++) {
+        printf("%d\n", numbers[i]);
+    }
     return res.buffer;
 }
 
