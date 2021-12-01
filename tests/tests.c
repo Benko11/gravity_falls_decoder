@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <string.h>
-#include "../string.h"
+#include "../my_string.h"
 #include "../cyclic_array.h"
 #include "../ciphers.h"
 

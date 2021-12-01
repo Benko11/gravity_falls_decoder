@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "string_helpers.h"
+#include "my_string_helpers.h"
 
 #ifndef STRING_H
 #define STRING_H
