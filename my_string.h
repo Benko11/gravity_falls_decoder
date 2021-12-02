@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include "my_string_helpers.h"
 
 #ifndef STRING_H
@@ -32,7 +33,7 @@ void str_assign(string *str, char *value) {
 }
 
 void str_add(string *str, char *extra) {
-    if (str->buffer == "") {
+    if (str->buffer[0] == '\0') {
         str_assign(str, extra);
         return;
     }
