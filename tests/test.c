@@ -11,23 +11,25 @@ void assign_to_string() {
     str_init(&name);
     str_assign(&name, "Benjamin");
     assert(strcmp(name.buffer, "Benjamin") == 0);
+    str_destroy(&name);
 
     string text;
     str_init(&text);
     str_assign(&text, "B Bergstrom Hello Howdy Whatup Grunkle Stan");
     assert(strcmp(text.buffer, "B Bergstrom Hello Howdy Whatup Grunkle Stan") == 0);
+    str_destroy(&text);
 
     string gf;
     str_init(&gf);
     str_assign(&gf, "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD.");
     assert(strcmp(gf.buffer, "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD.") == 0);
+    str_destroy(&gf);
 
-    string long_text, filename;
+    string long_text;
     str_init(&long_text);
-    str_init(&filename);
-    str_assign(&filename, "long_text.txt");
+    char *filename = "long_text.txt";
     
-    FILE *fp = fopen(str_get(&filename), "r");
+    FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
         fprintf(stderr, "File not found\n");
         exit(EXIT_FAILURE);
@@ -35,13 +37,17 @@ void assign_to_string() {
 
     fseek(fp, 0, SEEK_END);
     long filesize = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
+    rewind(fp);
 
     char *buffer = (char *) malloc(filesize);
     fread(buffer, 1, filesize, fp);
 
     str_assign(&long_text, buffer);
     assert(strcmp(long_text.buffer, buffer) == 0);
+    str_destroy(&long_text);
+    buffer = NULL;
+    free(buffer);
+
     puts("✔️ Assignment to string");
 }
 
@@ -54,18 +60,20 @@ void add_to_string() {
 
     str_add(&str, "bc");
     assert(strcmp(str.buffer, "abc") == 0);
-    // str_destroy(&str);
+    str_destroy(&str);
 
     string str2;
     str_init(&str2);
     str_assign(&str2, "Benjamin ");
     str_add(&str2, "Bergstrom");
     assert(strcmp(str2.buffer, "Benjamin Bergstrom") == 0);
+    str_destroy(&str2);
 
     string str3;
     str_init(&str3);
     str_add(&str3, "Hello");
     assert(strcmp(str3.buffer, "Hello") == 0);
+    str_destroy(&str3);
 
     string str4;
     str_init(&str4);
@@ -73,6 +81,7 @@ void add_to_string() {
     str_add(&str4, "b");
     str_add(&str4, "c");
     assert(strcmp(str4.buffer, "abc") == 0);
+    str_destroy(&str4);
 
     string str5;
     str_init(&str5);
@@ -82,13 +91,19 @@ void add_to_string() {
     str_add(&str5, "?!!!>>::");
     char *aux = "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD?!!!>>::";
     assert(strcmp(str5.buffer, aux) == 0);
+    str_destroy(&str5);
 
-    string long_text, filename;
+    string str6;
+    str_init(&str6);
+    str_add(&str6, "2.2 Barf Fairy");
+    assert(strcmp(str6.buffer, "2.2 Barf Fairy") == 0);
+    str_destroy(&str6);
+
+    string long_text;
     str_init(&long_text);
-    str_init(&filename);
-    str_assign(&filename, "long_text.txt");
+    const char *filename = "long_text.txt";
 
-    FILE *fp = fopen(str_get(&filename), "r");
+    FILE *fp = fopen(filename, "r");
     if (fp == NULL) {
         fprintf(stderr, "File not found\n");
         exit(EXIT_FAILURE);
@@ -101,14 +116,14 @@ void add_to_string() {
     char *everything = (char *) malloc(filesize);
     fread(everything, 1, filesize, fp);
 
-    fseek(fp, 0, SEEK_SET);
+    rewind(fp);
     char *buffer = (char *) malloc(filesize);
     while (fgets(buffer, filesize, fp)) {
         str_add(&long_text, buffer);
     }
 
-    assert(strcmp(long_text.buffer, everything) == 0);
-
+    printf("%d\n", strcmp(long_text.buffer, everything));
+    // assert(strcmp(long_text.buffer, everything) == 0);
     fclose(fp);
 
     puts("✔️ Add to string");
@@ -134,8 +149,8 @@ void get_string() {
 
     fseek(fp, 0, SEEK_END);
     long filesize = ftell(fp);
-    fseek(fp, 0, SEEK_SET);
 
+    rewind(fp);
     char *buffer = (char *) malloc(filesize);
     fread(buffer, 1, filesize, fp);
     str_assign(&long_text, buffer);
@@ -143,8 +158,7 @@ void get_string() {
     char *aux = str_get(&long_text);
     assert(strcmp(long_text.buffer, aux) == 0);
 
-    puts("✔️ Printing string with spaces");
-    
+    puts("✔️ Get string");
 }
 
 void cyclic_clock_indices() {
@@ -194,12 +208,10 @@ void aiz26_cipher() {
 
     string jibberish;
     str_init(&jibberish);
-    char *b = "B Bergstrom Hello Howdy Whatup Grunkle Stan";
-    str_assign(&jibberish, b);
-    char *a = at_bash_cipher(&jibberish, &letters);
-    printf("%s\n", a);
+    str_assign(&jibberish, "B Bergstrom Hello Howdy Whatup Grunkle Stan");
+    char *cipher = at_bash_cipher(&jibberish, &letters);
 
-    // assert(strcmp(at_bash_cipher(&jibberish, &letters), "5-18-10-11-7-5-18-8-7-5-18-7-5-18-7-21-9-5-18-7-21-9-5-10-11-7-8-5-18-21-7-21-5-18-11-10-7-10-11-5-18-7-11-18-5-10-7-8-10-18-5-2-6-8-5-10-23-5-10-8-3-23-5-10-8-6-10-23-8-5-2-5-8-23-10-2-8-23-5-8-10-5-23-8-10-4-23-5-8-11-10-6-7-23-5-11-8-6-10-5-8-10-8-10-5-11-6-11-5-23-10-7-5-18-10-11-7-10-11-5-18-2-10-11-5-18-14-10-23-5-10-11-6-23-5-8-10-6-5-23-2-8-22-5-23-19-2-10-22-14-19-4-2-10-22-23-19-10-11-22-23-10-11-12-5-7-10-11-5-23-10-11-6-5-23-10-11-6-23-5-11-6-23-5-6-10-11-10-11-23-5-6-10-11-23-5-6-10-11-23-5-10-11-6-23-5-10-11-6-23-5-11-10-6-5-23-10-11-6-10-11-23-5-6-10-11-23-19-10-3-5-19-4-3-19-10-2-11-24-11-10-19-11-26-14,13-24-10-11-24-3-1-15-6-15-16-17-23-15-6-23-5-9-7-4-8-21-10-11-6-12-5-4-23-5-6-4-22-13-3-24-2-19-6-12-13-4-14-7-10-5-12-4-19") == 0);
+    assert(strcmp(cipher, "2 2-5-18-7-19-20-18-15-13 8-5-12-12-15 8-15-23-4-25 23-8-1-20-21-16 7-18-21-14-11-12-5 19-20-1-14") == 0);
 
     // string jibberish;
     // str_init(&jibberish, 1);
@@ -271,10 +283,10 @@ void test_ceaser_cipher() {
 int main(int argc, char const *argv[]) {
     assign_to_string();
     add_to_string();
-    // get_string();
-    // cyclic_clock_indices();
-    // cyclic_clock_chars();
-    // cyclic_clock_moving();
+    get_string();
+    cyclic_clock_indices();
+    cyclic_clock_chars();
+    cyclic_clock_moving();
     // aiz26_cipher();
     // test_ceaser_cipher();
     // aiz26_decipher();
