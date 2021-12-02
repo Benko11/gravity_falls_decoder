@@ -8,18 +8,11 @@ char *at_bash_cipher(string *text, cyclic_array *letters) {
     string res;
     str_init(&res);
 
+    printf("Buffer: %s\n", text->buffer);
     char *aux_ptr = text->buffer;
     while (*aux_ptr != '\0') {
-        // change to number and add a dash
-        if (*aux_ptr >= 'a' && *aux_ptr <= 'z' || *aux_ptr >= 'A' && *aux_ptr <= 'Z') {
-            const size_t current_index = c_arr_index(letters, toupper(*aux_ptr));
-            const int RESERVE = current_index > 9 ? 3 : 2;
-            char temp[RESERVE];
-            sprintf(temp, "%lu", current_index);
-            str_add(&res, temp);
-            // str_add(&res, "-");
-        } else {
-            str_add_c(&res, *aux_ptr);
+        if (*aux_ptr >= 'A' && *aux_ptr <= 'Z' || *aux_ptr >= 'a' && *aux_ptr <= 'z') {
+            printf("%c\n", *aux_ptr);
         }
         
         *aux_ptr++;
