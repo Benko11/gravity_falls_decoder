@@ -8,15 +8,24 @@ char *at_bash_cipher(string *text, cyclic_array *letters) {
     string res;
     str_init(&res);
 
-    printf("Buffer: %s\n", text->buffer);
     char *aux_ptr = text->buffer;
     while (*aux_ptr != '\0') {
         if (*aux_ptr >= 'A' && *aux_ptr <= 'Z' || *aux_ptr >= 'a' && *aux_ptr <= 'z') {
-            printf("%c\n", *aux_ptr);
+            size_t current_index = c_arr_index(letters, toupper(*aux_ptr));
+
+            const int RESERVED = current_index > 9 ? 3 : 2;
+            char current_index_str[RESERVED];
+            sprintf(current_index_str, "%lu", current_index);
+
+            str_add(&res, current_index_str);
+        } else {
+            str_add_c(&res, *aux_ptr);
         }
         
-        *aux_ptr++;
+        aux_ptr++;
     }
+
+    printf("Buffer: %s\n", res.buffer);
 
     return res.buffer;
 }

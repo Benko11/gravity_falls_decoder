@@ -206,12 +206,13 @@ void aiz26_cipher() {
     cyclic_array letters;
     c_arr_init(&letters, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
-    string jibberish;
-    str_init(&jibberish);
-    str_assign(&jibberish, "B Bergstrom Hello Howdy Whatup Grunkle Stan");
-    char *cipher = at_bash_cipher(&jibberish, &letters);
+    string str;
+    str_init(&str);
+    str_assign(&str, "ba");
+    char *cipher = at_bash_cipher(&str, &letters);
 
-    assert(strcmp(cipher, "2 2-5-18-7-19-20-18-15-13 8-5-12-12-15 8-15-23-4-25 23-8-1-20-21-16 7-18-21-14-11-12-5 19-20-1-14") == 0);
+    printf("cipher: %c\n", *cipher);
+    // assert(strcmp(cipher, "2") == 0);
 
     // string jibberish;
     // str_init(&jibberish, 1);
@@ -261,7 +262,7 @@ void aiz26_decipher() {
     printf("%s\n", a);
 }
 
-void test_ceaser_cipher() {
+void test_caeser_cipher() {
     cyclic_array letters;
     c_arr_init(&letters, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
@@ -270,25 +271,47 @@ void test_ceaser_cipher() {
     str_add(&name, "Benjamin Bergstrom");
 
     assert(strcmp(caesar_cipher(&name, &letters), "EHQMDPLQ EHUJVWURP") == 0);
+    str_destroy(&name);
 
     string text;
     str_init(&text);
     str_add(&text, "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD.");
 
     assert(strcmp(caesar_cipher(&text, &letters), "JUDYLWB IDOOV LV DQ DPHULFDQ PBVWHUB-FRPHGB DQLPDWHG WHOHYLVLRQ VHULHV FUHDWHG EB DOHA KLUVFK IRU GLVQHB FKDQQHO DQG GLVQHB AG.") == 0);
+    str_destroy(&text);
 
     puts("✔️ Ceaser cipher");
 }
 
+void test_caesar_decipher() {
+    cyclic_array letters;
+    c_arr_init(&letters, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    string name;
+    str_init(&name);
+    str_add(&name, "Ehqmdplq Ehujvwurp");
+
+    assert(strcmp(caesar_decipher(&name, &letters), "BENJAMIN BERGSTROM") == 0);
+
+    string text;
+    str_init(&text);
+    str_add(&text, "Judylwb Idoov lv dq Dphulfdq pbvwhub-frphgb dqlpdwhg whohylvlrq vhulhv fuhdwhg eb Doha Kluvfk iru Glvqhb Fkdqqho dqg Glvqhb AG.");
+
+    assert(strcmp(caesar_decipher(&text, &letters), "GRAVITY FALLS IS AN AMERICAN MYSTERY-COMEDY ANIMATED TELEVISION SERIES CREATED BY ALEX HIRSCH FOR DISNEY CHANNEL AND DISNEY XD.") == 0);
+
+    puts("✔️ Ceaser decipher");
+}
+
 int main(int argc, char const *argv[]) {
-    assign_to_string();
-    add_to_string();
-    get_string();
-    cyclic_clock_indices();
-    cyclic_clock_chars();
-    cyclic_clock_moving();
+    // assign_to_string();
+    // add_to_string();
+    // get_string();
+    // cyclic_clock_indices();
+    // cyclic_clock_chars();
+    // cyclic_clock_moving();
     // aiz26_cipher();
-    // test_ceaser_cipher();
+    test_caeser_cipher();
+    test_caesar_decipher();
     // aiz26_decipher();
 
     puts("All tests passed!");
