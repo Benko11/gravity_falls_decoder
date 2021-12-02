@@ -40,7 +40,7 @@ void str_add(string *str, char *extra) {
 
     size_t size = str->capacity + str_size(extra);
     while (size > str->capacity) {
-        str->capacity *= 2;
+        str->capacity++;
     }
 
     char *backup = str->buffer;
@@ -91,6 +91,7 @@ char *str_get(string *str) {
 }
 
 void str_destroy(string *str) {
-    free(str);
+    str->buffer = NULL;
+    free(str->buffer);
 }
 #endif
