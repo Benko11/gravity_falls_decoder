@@ -38,9 +38,9 @@ void str_add(string *str, char *extra) {
         return;
     }
 
-    size_t size = str->capacity + str_size(extra);
+    size_t size = strlen(str_get(str)) + str_size(extra);
     while (size > str->capacity) {
-        str->capacity++;
+        str->capacity *= 2;
     }
 
     char *backup = str->buffer;
@@ -66,7 +66,7 @@ void str_add_c(string *str, char extra) {
     str_init(&backup);
     str_assign(&backup, str->buffer);
 
-    size_t size = str->capacity + 1;
+    size_t size = strlen(str_get(str)) + 1;
     while (size > str->capacity) {
         str->capacity *= 2;
     }
@@ -83,7 +83,6 @@ void str_add_c(string *str, char extra) {
 
     *aux_ptr = extra;
     aux_ptr++;
-    *aux_ptr = '\0';
 }
 
 char *str_get(string *str) {
