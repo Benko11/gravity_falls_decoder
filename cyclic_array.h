@@ -55,4 +55,8 @@ char c_arr_move(cyclic_array *c_arr, char start, int steps) {
 
     return c_arr_char(c_arr, current_char);
 }
+
+void c_arr_destroy(cyclic_array *c_arr) {
+    free(c_arr);
+}
 #endif

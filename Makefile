@@ -1,2 +1,4 @@
+all:
+
 test:
-	gcc ./tests/test.c -o test.out -lm && cd tests && ./test.out
+	gcc -g ./tests/test.c -o test.out -lm && cd tests && ./test.out

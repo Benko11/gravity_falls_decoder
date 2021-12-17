@@ -60,20 +60,20 @@ void add_to_string() {
 
     str_add(&str, "bc");
     assert(strcmp(str.buffer, "abc") == 0);
-    str_destroy(&str);
+    // str_destroy(&str);
 
     string str2;
     str_init(&str2);
     str_assign(&str2, "Benjamin ");
     str_add(&str2, "Bergstrom");
     assert(strcmp(str2.buffer, "Benjamin Bergstrom") == 0);
-    str_destroy(&str2);
+    // str_destroy(&str2);
 
     string str3;
     str_init(&str3);
     str_add(&str3, "Hello");
     assert(strcmp(str3.buffer, "Hello") == 0);
-    str_destroy(&str3);
+    // str_destroy(&str3);
 
     string str4;
     str_init(&str4);
@@ -81,7 +81,7 @@ void add_to_string() {
     str_add(&str4, "b");
     str_add(&str4, "c");
     assert(strcmp(str4.buffer, "abc") == 0);
-    str_destroy(&str4);
+    // str_destroy(&str4);
 
     string str5;
     str_init(&str5);
@@ -91,13 +91,7 @@ void add_to_string() {
     str_add(&str5, "?!!!>>::");
     char *aux = "Gravity Falls is an American mystery-comedy animated television series created by Alex Hirsch for Disney Channel and Disney XD?!!!>>::";
     assert(strcmp(str5.buffer, aux) == 0);
-    str_destroy(&str5);
-
-    string str6;
-    str_init(&str6);
-    str_add(&str6, "2.2 Barf Fairy");
-    assert(strcmp(str6.buffer, "2.2 Barf Fairy") == 0);
-    str_destroy(&str6);
+    // str_destroy(&str5);
 
     string long_text;
     str_init(&long_text);
@@ -124,7 +118,7 @@ void add_to_string() {
 
     printf("%d\n", strcmp(long_text.buffer, everything));
     // assert(strcmp(long_text.buffer, everything) == 0);
-    fclose(fp);
+    // fclose(fp);
 
     puts("✔️ Add to string");
 }
@@ -136,12 +130,10 @@ void get_string() {
     char *my_name = str_get(&name);
     assert(my_name == "Benjamin Bergstrom");
 
-    string long_text, filename;
+    string long_text;
     str_init(&long_text);
-    str_init(&filename);
-    str_assign(&filename, "long_text.txt");
     
-    FILE *fp = fopen(str_get(&filename), "r");
+    FILE *fp = fopen("long_text.txt", "r");
     if (fp == NULL) {
         fprintf(stderr, "File not found\n");
         exit(EXIT_FAILURE);
@@ -157,6 +149,8 @@ void get_string() {
 
     char *aux = str_get(&long_text);
     assert(strcmp(long_text.buffer, aux) == 0);
+
+    // fclose(fp);
 
     puts("✔️ Get string");
 }
@@ -174,30 +168,36 @@ void cyclic_clock_indices() {
         assert(item - 48 == i + 1);
     }
 
+    // c_arr_destroy(&clock);
+
     puts("✔️ Clock indexes");
 }
 
 void cyclic_clock_chars() {
-    cyclic_array clock;
-    c_arr_init(&clock, "123456789abc");
-    assert(c_arr_char(&clock, 2) == '2');
-    assert(c_arr_char(&clock, 12) == 'c');
+    cyclic_array clock2;
+    c_arr_init(&clock2, "123456789abc");
+    assert(c_arr_char(&clock2, 2) == '2');
+    assert(c_arr_char(&clock2, 12) == 'c');
+    
+    // c_arr_destroy(&clock2);
 
     puts("✔️ Clock chars");
 }
 
 void cyclic_clock_moving() {
-    cyclic_array clock;
-    c_arr_init(&clock, "123456789abc");
+    cyclic_array clock3;
+    c_arr_init(&clock3, "123456789abc");
 
-    assert(c_arr_move(&clock, '1', 2) == '3');
-    assert(c_arr_move(&clock, 'c', 3) == '3');
-    assert(c_arr_move(&clock, 'c', 20) == '8');
-    assert(c_arr_move(&clock, 'c', 40) == '4');
-    assert(c_arr_move(&clock, 'c', 500) == '8');
-    assert(c_arr_move(&clock, 'c', -3) == '9');
-    assert(c_arr_move(&clock, '1', -9) == '4');
-    assert(c_arr_move(&clock, 'c', -500) == '4');
+    assert(c_arr_move(&clock3, '1', 2) == '3');
+    assert(c_arr_move(&clock3, 'c', 3) == '3');
+    assert(c_arr_move(&clock3, 'c', 20) == '8');
+    assert(c_arr_move(&clock3, 'c', 40) == '4');
+    assert(c_arr_move(&clock3, 'c', 500) == '8');
+    assert(c_arr_move(&clock3, 'c', -3) == '9');
+    assert(c_arr_move(&clock3, '1', -9) == '4');
+    assert(c_arr_move(&clock3, 'c', -500) == '4');
+
+    // c_arr_destroy(&clock3);
 
     puts("✔️ Clock moving indexes");
 }
@@ -303,12 +303,12 @@ void test_caesar_decipher() {
 }
 
 int main(int argc, char const *argv[]) {
-    // assign_to_string();
-    // add_to_string();
-    // get_string();
-    // cyclic_clock_indices();
-    // cyclic_clock_chars();
-    // cyclic_clock_moving();
+    assign_to_string();
+    add_to_string();
+    get_string();
+    cyclic_clock_indices();
+    cyclic_clock_chars();
+    cyclic_clock_moving();
     // aiz26_cipher();
     test_caeser_cipher();
     test_caesar_decipher();
