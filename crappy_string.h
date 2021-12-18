@@ -9,6 +9,12 @@ typedef struct {
     size_t capacity;
 } crappy_string;
 
+void str_init(crappy_string *str);
+void str_assign(crappy_string *str, char *value);
+void str_add(crappy_string *str, char *value);
+char *str_get(crappy_string *str);
+void str_destroy(crappy_string *str);
+
 void str_init(crappy_string *str) {
     str->buffer = (char *) malloc(2 * sizeof(char));
     str->capacity = 1; // excludes '\0'
@@ -28,6 +34,15 @@ void str_assign(crappy_string *str, char *value) {
         *(buffer++) = *(aux_ptr++);
     }
     *(buffer++) = '\0';
+}
+
+void str_add(crappy_string *str, char *value) {
+    if (str->buffer[0] == '\0') {
+        str_assign(str, value);
+        return;
+    }
+
+    size_t length = strlen(value) + strlen(str_get(str));
 }
 
 char *str_get(crappy_string *str) {
