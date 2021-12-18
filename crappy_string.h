@@ -23,11 +23,18 @@ void str_init(crappy_string *str) {
 void str_assign(crappy_string *str, char *value) {
     size_t length = strlen(value);
 
+    if (str->capacity > length) {
+        str->capacity = 1;
+        str->buffer = (char *) realloc(str->buffer, 2 * sizeof(char));
+    }
+
     while (length > str->capacity) {
         str->capacity *= 2;
     }
 
     str->buffer = (char *) realloc(str->buffer, str->capacity + 1);
+    memset(str->buffer, 0x00, str->capacity + 1);
+
     char *buffer = str->buffer;
     char *aux_ptr = value;
     while (*aux_ptr != '\0') {
@@ -43,6 +50,22 @@ void str_add(crappy_string *str, char *value) {
     }
 
     size_t length = strlen(value) + strlen(str_get(str));
+
+    while (length > str->capacity) {
+        str->capacity *= 2;
+    }
+
+    str->buffer = (char *) realloc(str->buffer, str->capacity + 1);
+    char *aux_ptr = str->buffer;
+    while (*aux_ptr != '\0') {
+        aux_ptr++;
+    }
+
+    while (*value != '\0') {
+        *(aux_ptr++) = *(value++);
+    }
+
+    *(aux_ptr++) = '\0';
 }
 
 char *str_get(crappy_string *str) {
@@ -50,6 +73,7 @@ char *str_get(crappy_string *str) {
 }
 
 void str_destroy(crappy_string *str) {
+    memset(str->buffer, 0x00, str->capacity + 1);
     free(str->buffer);
 }
 #endif
