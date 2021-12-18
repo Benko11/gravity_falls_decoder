@@ -5,7 +5,8 @@ project(gravity_falls_decoder)
 find_package(Threads)
 
 set(SOURCE_FILES
-        tests.cpp
+        tests_crappy_string.cpp
+        tests_cyclic_array.cpp
 
         GoogleTest/gtest-death-test.cc
         GoogleTest/gtest-filepath.cc

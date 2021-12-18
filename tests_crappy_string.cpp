@@ -8,7 +8,6 @@
 using namespace ::testing;
 
 
-//Uloha 1.
 TEST(TestsStringAssignment, SettingAndGetting) {
 	char helper[9];
 	strcpy(helper, "Benjamin");
