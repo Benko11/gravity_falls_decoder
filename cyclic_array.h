@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "utils/is_letter.h"
 
 #ifndef CYCLIC_ARRAY_H
 #define CYCLIC_ARRAY_H
@@ -18,8 +19,6 @@ void c_arr_init(cyclic_array *c_arr, char *items) {
     size_t length = strlen(items) + 1;
     c_arr->buffer = (char *) malloc(length * sizeof(char));
     strcpy(c_arr->buffer, items);
-
-    printf("Items: %s\n", c_arr->buffer);
 }
 
 char *c_arr_all_items(cyclic_array *c_arr) {
