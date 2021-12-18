@@ -33,14 +33,14 @@ void str_assign(crappy_string *str, char *value) {
     }
 
     str->buffer = (char *) realloc(str->buffer, str->capacity + 1);
-    memset(str->buffer, 0x00, str->capacity + 1);
+    strcpy(str->buffer, value);
 
-    char *buffer = str->buffer;
-    char *aux_ptr = value;
-    while (*aux_ptr != '\0') {
-        *(buffer++) = *(aux_ptr++);
-    }
-    *(buffer++) = '\0';
+    // char *buffer = str->buffer;
+    // char *aux_ptr = value;
+    // while (*aux_ptr != '\0') {
+    //     *(buffer++) = *(aux_ptr++);
+    // }
+    // *(buffer++) = '\0';
 }
 
 void str_add(crappy_string *str, char *value) {
@@ -73,7 +73,6 @@ char *str_get(crappy_string *str) {
 }
 
 void str_destroy(crappy_string *str) {
-    memset(str->buffer, 0x00, str->capacity + 1);
     free(str->buffer);
 }
 #endif
