@@ -86,3 +86,13 @@ Binary cipher/decipher turns an ASCII string into binary and vice versa.
 `char *binary_cipher(char *text)` - turns an ASCII string into binary string and returns it. ASCII rule is assumed, but not explicitly enforced or handled.
 
 `char *binary_decipher(char *cipher)` - turns a binary string into ASCII. It also checks whether a binary string is valid (its length must be a multiple of 8, as each character is represented with 8 bits, and it must not contain non-binary characters).
+
+### `utils/`
+
+`unsigned char binary_conversion_int(char *numeric)` - function returns a character number from the binary string in `char *numeric`.
+
+`char *binary_conversion(unsigned char character)` - function returns a binary string from the character `unsigned char character`.
+
+`int is_all_binary(char *text)` - checks whether a given string `char *text` presumed to be binary is really binary.
+
+`int is_letter(char character)` - checks whether a given character `char character` is a letter.
