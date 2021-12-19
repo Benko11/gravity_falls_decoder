@@ -8,7 +8,8 @@ set(SOURCE_FILES
         # tests_crappy_string.cpp
         # tests_cyclic_array.cpp
         # tests_caesar.cpp
-        tests_vigenere.cpp
+        # tests_vigenere.cpp
+        tests_atbash.cpp
 
         GoogleTest/gtest-death-test.cc
         GoogleTest/gtest-filepath.cc
