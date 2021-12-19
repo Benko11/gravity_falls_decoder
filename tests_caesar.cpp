@@ -126,3 +126,113 @@ TEST(TestCaesar, Sentences) {
 
     c_arr_destroy(alphabet);
 }
+
+TEST(TestCaesarDecipher, OneWordUppercaseStrings) {
+    cyclic_array out, *alphabet;
+    alphabet = &out;
+
+    char items[27];
+    strcpy(items, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    char text[12];
+    strcpy(text, "JUDYLWB");
+
+    char cipher[12];
+    strcpy(cipher, "GRAVITY");
+
+    c_arr_init(alphabet, items);
+    char *generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "IDOOV");
+    strcpy(cipher, "FALLS");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "FRQILHOG");
+    strcpy(cipher, "CONFIELD");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "JDB");
+    strcpy(cipher, "GAY");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    c_arr_destroy(alphabet);
+}
+
+TEST(TestCaesarDecipher2, OneWordStrings) {
+    cyclic_array out, *alphabet;
+    alphabet = &out;
+
+    char items[27];
+    strcpy(items, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    char text[12];
+    strcpy(text, "judylwb");
+
+    char cipher[12];
+    strcpy(cipher, "GRAVITY");
+
+    c_arr_init(alphabet, items);
+    char *generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "iDOOv");
+    strcpy(cipher, "FALLS");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "fRQILhog");
+    strcpy(cipher, "CONFIELD");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "jdb");
+    strcpy(cipher, "GAY");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    c_arr_destroy(alphabet);
+}
+
+TEST(TestCaesarDecipher3, Sentences) {
+    cyclic_array out, *alphabet;
+    alphabet = &out;
+
+    char items[27];
+    strcpy(items, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    char text[63];
+    strcpy(text, "Judylwb idoov");
+
+    char cipher[63];
+    strcpy(cipher, "GRAVITY FALLS");
+
+    c_arr_init(alphabet, items);
+    char *generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+    
+    strcpy(text, "eloolh hlolvk pdnhv SUHWWB JRRG pxvlf.");
+    strcpy(cipher, "BILLIE EILISH MAKES PRETTY GOOD MUSIC.");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "Udglrkhdg pdnh rxw-ri-wklv-zruog pxvlf!");
+    strcpy(cipher, "RADIOHEAD MAKE OUT-OF-THIS-WORLD MUSIC!");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "L FUDYH jdb vha");
+    strcpy(cipher, "I CRAVE GAY SEX");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    strcpy(text, "Lw lv wlph wr JURZ XS dqg wdnh frxuvh ri olih lqwr brxu kdqgv.");
+    strcpy(cipher, "IT IS TIME TO GROW UP AND TAKE COURSE OF LIFE INTO YOUR HANDS.");
+    generated = caesar_decipher(text, alphabet);
+    ASSERT_EQ(strcmp(cipher, generated), 0);
+
+    c_arr_destroy(alphabet);
+}
