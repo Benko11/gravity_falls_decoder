@@ -70,3 +70,11 @@ Vigenere is similar to Caesar cipher, but for ciphering it takes an additional k
 `char *vigenere_cipher(char *text, cyclic_array *alphabet, char *key)` - specific implementation of the `vigenere_move()` function in forward movement
 
 `char *vigenere_decipher(char *text, cyclic_array *alphabet, char *key)` - specific implementation of the `vigenere_move()` function in backward movement
+
+### `atbash.h`
+
+Atbash cipher returns the 'opposite' (i.e. `'Z'` for `'A'`, `'B'` for `'Y'`, etc.) character in the alphabet for each letter in a string.
+
+`char atbash_char_move(char character, cyclic_array *alphabet)` - helper function, which for each character returns the 'opposite' character, as specified above.
+
+`char *atbash_move(char *text, cyclic_array *alphabet)` - returns a string, which has had the atbash cipher/decipher applied to it.
