@@ -9,7 +9,8 @@ set(SOURCE_FILES
         # tests_cyclic_array.cpp
         # tests_caesar.cpp
         # tests_vigenere.cpp
-        tests_atbash.cpp
+        # tests_atbash.cpp
+        tests_binary.cpp
 
         GoogleTest/gtest-death-test.cc
         GoogleTest/gtest-filepath.cc
