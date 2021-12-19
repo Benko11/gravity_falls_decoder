@@ -78,3 +78,11 @@ Atbash cipher returns the 'opposite' (i.e. `'Z'` for `'A'`, `'B'` for `'Y'`, etc
 `char atbash_char_move(char character, cyclic_array *alphabet)` - helper function, which for each character returns the 'opposite' character, as specified above.
 
 `char *atbash_move(char *text, cyclic_array *alphabet)` - returns a string, which has had the atbash cipher/decipher applied to it.
+
+### `binary.h`
+
+Binary cipher/decipher turns an ASCII string into binary and vice versa.
+
+`char *binary_cipher(char *text)` - turns an ASCII string into binary string and returns it. ASCII rule is assumed, but not explicitly enforced or handled.
+
+`char *binary_decipher(char *cipher)` - turns a binary string into ASCII. It also checks whether a binary string is valid (its length must be a multiple of 8, as each character is represented with 8 bits, and it must not contain non-binary characters).
