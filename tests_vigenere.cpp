@@ -142,8 +142,7 @@ TEST(TestVigenereDecipher3, ComplexKeys2) {
     char cipher[19] = "GRAVITY FALLS";
 
     c_arr_init(alphabet, items);
-    char *res = vigenere_cipher(text, alphabet, key);
-    printf("Result: %s\n", res);
+    char *res = vigenere_decipher(text, alphabet, key);
     ASSERT_EQ(strcmp(cipher, res), 0);
 
     c_arr_destroy(alphabet);
