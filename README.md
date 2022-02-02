@@ -120,3 +120,5 @@ Binary cipher/decipher turns an ASCII string into binary and vice versa.
 `int is_all_binary(char *text)` - checks whether a given string `char *text` presumed to be binary is really binary.
 
 `int is_letter(char character)` - checks whether a given character `char character` is a letter.
+
+`char *strtouppercase(char *word)` - turns the word into one with all uppercase letters and returns it.
