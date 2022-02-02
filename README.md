@@ -16,6 +16,30 @@ Test files are stored in the root directory in a form of `tests_<feature>.cpp`. 
 
 The rest of the files represent a scaffolding for a `GoogleTest` application, and they are necessary for the tests to run properly.
 
+## Launching
+
+`main.c` represents the executable file. Assumed platform is Linux, other platforms may generate unexpected results in printing routines. Recommended way of compiling the file is described in the Makefile under `make run`.
+
+Programme can operate in two CLI modes. One mode represents the user with an intuitive text interface. Other mode allows immediate execution of the programme for a given cipher by passing in command-line arguments. To learn about more about them, use `./main.out help`. Below is the transcipt of help:
+
+```
+usage: ./main.out <cipher_type> <text> <key>
+<cipher_type> - numerical value of the cipher or its abbreviation
+<text> - desired user input without spaces
+<key> - (optional) hashing key for selected ciphers (Vigenere)
+
+Cipher types:
+Vigenere cipher: 1 | vigc
+Vigenere decipher: 2 | vigd
+Caesar cipher: 3 | caec
+Caesar decipher: 4 | caed
+Binary cipher: 5 | binc
+Binary decipher: 6 | bind
+Atbash: 7 | atbash
+
+usage: ./main.out - enters the CLI
+```
+
 ## Programme logic
 
 ### `crappy_string.h`
